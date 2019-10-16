@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>
+        WIFIOUTLET
+    </title>
+<!-- Link in css File -->
+<link rel = 'stylesheet' type = 'text/css' href = "/static/style.css">
+</head>
+
+<body>
+
+<h1>LOG IN</h1>
+
+<form method='POST' action = '/creation_verify'>
+
+    TYPE IN USERNAME<input class = 'input' name = 'username' type = 'text'>
+    <br/>
+    TYPE IN PASSWORD<input class = 'input' name = 'password' type = 'text'>
+    <br/>
+    TYPE IN EMAIL<input class = 'input' name = 'email' type = 'text'>
+    <br/>
+    TYPE IN YOUR NAME <input class = 'input' name = 'name' type = 'text'>
+    <br/>
+    TYPE IN YOUR LAST NAME <input class = 'input' name = 'lastname' type = 'text'>
+    <br/>
+    TYPE IN YOUR PHONE NUMBER <input class = 'input' name = 'phone_number' type = 'text'>
+    <br/>
+    <button class='button' type = 'submit'>SUBMIT</button>
+    {%if error == True%}
+    <p>Either username/email exists or an input was left blank/p>
+    {%endif%}
+</form>
+
+</body>
+
+</html>

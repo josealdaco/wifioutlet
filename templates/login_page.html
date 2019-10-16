@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>
+        WIFIOUTLET
+    </title>
+<!-- Link in css File -->
+<link rel = 'stylesheet' type = 'text/css' href = "/static/style.css">
+
+</head>
+
+<body>
+
+<h1>LOG IN</h1>
+
+<form method='POST' action = '/home_page'>
+
+    TYPE IN USERNAME/EMAIL<input class = 'input' name = 'username' type = 'text'>
+    TYPE IN PASSWORD<input name = 'password' type = 'text'>
+    <button class='button' type = 'submit'>SUBMIT</button>
+    {%if error == True%}
+    <p>Error, User does not exist</p>
+    {%endif%}
+</form>
+    <a href = '/create_user'>Create account</a>
+
+</body>
+
+</html>
