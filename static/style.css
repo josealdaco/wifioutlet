@@ -8,7 +8,70 @@
  display: inline-block;
  font-size: 16px;
 }
+
+
+
+.form1{
+  position:relative;
+  display:inline-block;
+   bottom:20px;
+}
+
+.outlet{
+    position:relative;
+    align-content: center;
+    vertical-align:middle;
+    /*26% for outlet*/
+}
+
 .house{
     position: relative;
     align-content: center;
+    vertical-align:middle;
+    center:center;/* 50% for line above*/
+    left:50%
+}
+.money{
+    position: relative;
+    vertical-align:middle;
+    left:75% /*87% for line above */
+
+}
+
+
+
+
+.home_page_template{
+  align-content:center;
+  width: 500px;
+  height:500px;
+  border: 15px solid black;
+  padding: 50px;
+  margin: 90px 30%;
+}
+.money_page_template{
+   align-content:center;
+  width: 500px;
+  height:500px;
+  border: 15px solid black;
+  padding: 50px;
+  margin: 90px 30%;
+}
+.outlet_page_template{
+   align-content:center;
+  width: 500px;
+  height:500px;
+  border: 15px solid black;
+  padding: 50px;
+  margin: 90px 30%;
+}
+
+
+
+
+
+#line{
+ position: absolute;
+ border-left: 100px solid green;
+  height:5%;
 }

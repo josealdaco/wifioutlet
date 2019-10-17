@@ -1,0 +1,32 @@
+{%extends 'home_page.html'%}
+
+{%block content%}
+<link rel = 'stylesheet' type = 'text/css' href = "/static/style.css">
+
+<script>
+document.getElementById("line").style.left = "50%";
+</script>
+<div class = "outlet_page_template">
+    <p> Username: {{user.username}}</p>
+    <p> Email: {{user.email}}</p>
+    <p> Password: {{user.password}}</p>
+    <p> Name: {{user.name}}</p>
+    <p> Lastname: {{user.lastname}}</p>
+    <p> Phone Number: {{user.phone_number}}</p>
+    <p> Section amount: {{section_len}}</p>
+
+    <form method = 'POST' action = '/profile/update'>
+        <input type = 'hidden' name = 'user' value = '{{user._id}}'>
+        <input type="hidden" name = 'username' value = '{{user.username}}'>
+        <input type="hidden" name = 'email' value = '{{user.email}}'>
+        <input type="hidden" name = 'password' value = '{{user.password}}'>
+        <input type="hidden" name = 'name' value = '{{user.name}}'>
+        <input type="hidden" name = 'lastname' value = '{{user.lastname}}'>
+        <input type="hidden" name = 'phone_number' value = '{{user.phone_number}}'>
+
+        <button class = "button" type = 'submit'>UPDATE</button>
+    </form>
+
+
+</div>
+{%endblock%}

@@ -4,42 +4,43 @@
         WIFIOUTLET
     </title>
 <!-- Link in css File -->
-<style>
-
-.container {
-display: inline-block;
-cursor: pointer;
-}
-
-.bar1, .bar2, .bar3 {
-width: 35px;
-height: 5px;
-background-color: #333;
-margin: 6px 0;
-transition: 0.4s;
-}
-
-.change .bar1 {
--webkit-transform: rotate(-45deg) translate(-9px, 6px);
-transform: rotate(-45deg) translate(-9px, 6px);
-}
-
-.change .bar2 {opacity: 0;}
-
-.change .bar3 {
--webkit-transform: rotate(45deg) translate(-8px, -8px);
-transform: rotate(45deg) translate(-8px, -8px);
-}
-
-
-</style>
 
 <link rel = 'stylesheet' type = 'text/css' href = "/static/style.css">
+
+
+<div id = "line">
+</div>
+
+<form method="POST" action = '/user_profile'>
+    <input type="hidden" name = 'user' id = "user" value = '{{user._id}}'>
+<button  class = 'button' type="submit"> PROFILE</button>
+</form>
+
 
 
 </head>
 
 <body>
+
+
+        <form method="POST" action = '/user_home_page' class = " form1 house">
+     <!-- <img src = "https://image.flaticon.com/icons/png/512/25/25694.png" width="100px" height="100px" class = "house"> -->
+    <input type="hidden" name = 'user' id = "user" value = '{{user._id}}'>
+        <button  style = "background-color: transparent;border:none"type="submit"><img src = "https://image.flaticon.com/icons/png/512/25/25694.png" width="100px" height="100px" class = "house"></button>
+    </form>
+    <form method = 'POST' action = '/money_page' class = " form1 money">
+    <!-- <img src = "http://simpleicon.com/wp-content/uploads/coin-money-2.png"width="100px" height="100px" class = "money"> -->
+    <input type="hidden" name = 'user' id = "user" value = '{{user._id}}'>
+    <button style = "background-color: transparent;border:none" type="submit"><img src = "http://simpleicon.com/wp-content/uploads/coin-money-2.png"width="100px" height="100px" class = "money"></button>
+
+</form>
+<form method = 'POST' action = '/outlet_page' class = " form1 outlet">
+<!--    <img src = "https://static.thenounproject.com/png/945-200.png"width="100px" height="100px" class = "outlet"> -->
+    <input type="hidden" name = 'user' id = "user" value = '{{user._id}}'>
+    <button  style = "background-color: transparent;border:none" type="submit">  <img src = "https://static.thenounproject.com/png/945-200.png"width="100px" height="100px" class = "outlet"></button>
+
+</form>
+
 
 {%block content%}
     <!-- OTHER HTML PAGES WILL FILL THIS GAP -->

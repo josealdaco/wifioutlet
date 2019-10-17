@@ -1,0 +1,27 @@
+{%extends 'home_page.html'%}
+
+{%block content%}
+<link rel = 'stylesheet' type = 'text/css' href = "/static/style.css">
+<script>
+document.getElementById("line").style.left = "50%";
+</script>
+<div class = "outlet_page_template">
+    <form method = 'POST' action = '/user_profile'>
+    Current Username: {{username}} change to: <input type="text" name="username">
+    <br/>
+    Current email: {{email}} change to: <input type="text" name="email">
+    <br/>
+    Current password: {{password}} change to: <input type="text" name="password">
+    <br/>
+    Current name: {{name}} change to: <input type="text" name="name">
+    <br/>
+    Current Last Name: {{lastname}} change to: <input type="text" name="lastname">
+    <br/>
+    Current Phone Number: {{phone_number}} change to: <input type="text" name="phone_number">
+    <br/>
+    <button class = "button" type="submit">UPDATE</button>
+    </form>
+
+
+</div>
+{%endblock%}

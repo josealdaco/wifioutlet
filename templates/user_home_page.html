@@ -1,18 +1,17 @@
 {%extends 'home_page.html'%}
-
-
 {%block content%}
+<link rel = 'stylesheet' type = 'text/css' href = "/static/style.css">
+<input type = 'hidden' name = 'user' value = '{{user._id}}'>
 
-    <div class="container" onclick="myFunction(this)">
-    <div class="bar1"></div>
-    <div class="bar2"></div>
-    <div class="bar3"></div>
-    </div>
-    <div style="right: 50px;">
-    <img src = "https://image.flaticon.com/icons/png/512/25/25694.png" width="100px" height="100px" class = "house">
-    </div>
-    <img src = "http://simpleicon.com/wp-content/uploads/coin-money-2.png"width="100px" height="100px" class = "money">
-    <img src = "https://static.thenounproject.com/png/945-200.png"width="100px" height="100px" class = "outlet">
+<script>
+document.getElementById("line").style.left = "50%";
+</script>
 
+<div class = "home_page_template">
+    <h2>
+        This will display the home screen data
+    </h2>
+
+</div>
 
 {%endblock%}
