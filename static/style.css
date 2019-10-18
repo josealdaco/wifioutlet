@@ -1,3 +1,8 @@
+#align_center{
+    text-align: center;
+    left: 50%;
+}
+
 .button{
  background-color: green; /* Green */
  border: none;
@@ -42,28 +47,34 @@
 
 
 .home_page_template{
+  position:relative;
   align-content:center;
-  width: 500px;
-  height:500px;
+  width: 50%;
+  height:100%;
   border: 15px solid black;
   padding: 50px;
   margin: 90px 30%;
+  text-align: center;
 }
 .money_page_template{
-   align-content:center;
-  width: 500px;
-  height:500px;
-  border: 15px solid black;
-  padding: 50px;
-  margin: 90px 30%;
+    position:relative;
+    align-content:center;
+    width: 50%;
+    height:100%;
+    border: 15px solid black;
+    padding: 50px;
+    margin: 90px 30%;
+    text-align: center;
 }
 .outlet_page_template{
-   align-content:center;
-  width: 500px;
-  height:500px;
-  border: 15px solid black;
-  padding: 50px;
-  margin: 90px 30%;
+    position:relative;
+    align-content:center;
+    width: 50%;
+    height:100%;
+    border: 15px solid black;
+    padding: 50px;
+    margin: 90px 30%;
+    text-align: center;
 }
 
 
@@ -72,6 +83,8 @@
 
 #line{
  position: absolute;
- border-left: 100px solid green;
-  height:5%;
+ border-left: 200px solid green;
+ height:25%;
+ opacity: 0.7;
+
 }

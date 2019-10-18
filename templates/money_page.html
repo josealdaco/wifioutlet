@@ -4,13 +4,21 @@
 {%block content%}
 <link rel = 'stylesheet' type = 'text/css' href = "/static/style.css">
 <script>
-document.getElementById("line").style.left = "75%";
+document.getElementById("line").style.left = "84%";
 </script>
 
 <div class = "money_page_template">
     <h2>
         This will display the money Page data
     </h2>
+
+    {%if section_len == 0%}
+    <p>No devices in your account :(</p>
+    <form method="POST" action="/add/devices">
+        <input type="hidden" name = "user" value = "{{user._id}}">
+        <button class = 'button' type = 'submit'>ADD DEVICES</button>
+    </form>
+    {%endif%}
 </div>
 
 {%endblock%}

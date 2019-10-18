@@ -6,7 +6,8 @@
 document.getElementById("line").style.left = "50%";
 </script>
 <div class = "outlet_page_template">
-    <form method = 'POST' action = '/user_profile'>
+    <form method = 'POST' action = '/publish/profile'>
+        <input type = 'hidden' name = 'user' value = '{{user._id}}'>
     Current Username: {{username}} change to: <input type="text" name="username">
     <br/>
     Current email: {{email}} change to: <input type="text" name="email">

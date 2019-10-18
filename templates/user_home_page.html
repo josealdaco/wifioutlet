@@ -8,10 +8,35 @@ document.getElementById("line").style.left = "50%";
 </script>
 
 <div class = "home_page_template">
-    <h2>
-        This will display the home screen data
-    </h2>
+    <h1 id="align_center"> HOME</h1>
+    <br/>
+    <h2 id="align_center"><u>SECTIONS</u></h2>
 
+    {% for section in user.Sections%}
+
+        <div>
+            <form method="POST" action = "/user/section">
+                <!-- Will display and direct to section if clicked upon-->
+                <button type = 'submit'><img src = '{{section.image}}' width="100px" height="100px"></button>
+            </form>
+            <h2>Section name: {{section.name}}</h2>
+        </div>
+        {%endfor%}
+        <br/>
+        <h2 id="align_center"><u>TOTAL OUTPUT</u></h2>
+        {%if section_len == 0%}
+        <p>No devices in your account :(</p>
+        <form method="POST" action="/add/devices">
+            <input type="hidden" name = "user" value = "{{user._id}}">
+            <button class = 'button' type = 'submit'>ADD DEVICES</button>
+        </form>
+        {%endif%}
 </div>
+
+
+
+
+
+
 
 {%endblock%}

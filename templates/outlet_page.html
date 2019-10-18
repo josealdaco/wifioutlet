@@ -4,12 +4,31 @@
 {%block content%}
 <link rel = 'stylesheet' type = 'text/css' href = "/static/style.css">
 <script>
-document.getElementById("line").style.left = "25%";
+document.getElementById("line").style.left = "12%";
 </script>
 
 <div class = "outlet_page_template">
-<h2>
-    This will display the outlet device data
-</h2>
+    <h1 id="align_center"> DEVICES</h1>
+    <br/>
+
+    {% for section in user.Sections%}
+
+        <div>
+            <form method="POST" action = "/user/section">
+                <!-- Will display and direct to section if clicked upon-->
+                <button type = 'submit'><img src = '{{section.image}}' width="100px" height="100px"></button>
+            </form>
+            <h2>Section name: {{section.name}}</h2>
+            Device count: {{section.size}}
+        </div>
+        {%endfor%}
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <form method="POST" action="/add/devices" id = "align_center">
+            <input type="hidden" name = "user" value = "{{user._id}}">
+            <button class = 'button' type = 'submit'>ADD DEVICES</button>
+        </form>
 </div>
 {%endblock%}

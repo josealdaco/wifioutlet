@@ -1,0 +1,31 @@
+{%extends 'home_page.html'%}
+
+{%block content%}
+<link rel = 'stylesheet' type = 'text/css' href = "/static/style.css">
+
+<script>
+document.getElementById("line").style.left = "50%";
+</script>
+<div class = "outlet_page_template">
+    <form method = 'POST' action = '/publish/devices' id = "align_center">
+        <input type = 'hidden' name = 'user' value = '{{user._id}}'>
+    <p  id = "align_center">Enter Device name:</p><input type = 'text' name = "device_name">
+    <br/>
+    <p  id = "align_center">Enter Device number:</p><input type = 'text' name = "device_number">
+    <br/>
+     <p id = "align_center">Enter port number:</p><input type = 'text' name = "port_number">
+     <br/>
+     <p id = "align_center">Enter power usage:</p><input type = 'text' name = "power_consumption">
+     <br/>
+     <p id = "align_center">Enter Section name: </p><input type = 'text' name = "section_name">
+     <br/>
+     <p id = "align_center">Enter Image URL: </p><input type = 'text' name = "section_image">
+     <br/>
+      <br/>
+     <button class = 'button' type = 'submit'>Submit Devices</button>
+     </form>
+
+
+
+</div>
+{%endblock%}

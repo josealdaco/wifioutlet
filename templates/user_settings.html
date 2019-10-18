@@ -1,0 +1,23 @@
+{%extends 'home_page.html'%}
+
+{%block content%}
+<link rel = 'stylesheet' type = 'text/css' href = "/static/style.css">
+
+<script>
+document.getElementById("line").style.left = "50%";
+</script>
+<div class = "outlet_page_template">
+
+    <h1>SETTINGS</h1>
+    <form method="GET" action = '/'>
+        <button class = 'button' type = 'submit'>SIGN OUT</button>
+    </form>
+
+
+    <form method="POST" action = '/delete/account'>
+        <input type = 'hidden' name = 'user' value = '{{user._id}}'>
+        <button class = 'button' type = 'submit'>DELETE ACCOUNT</button>
+    </form>
+
+</div>
+{%endblock%}

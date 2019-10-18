@@ -20,6 +20,22 @@ def log_page():
         return render_template('login_page.html')
 
 
+@app.route('/user_settings', methods=['POST'])
+def user_settings():
+    """ Recieved user data and renders settings page"""
+    user = users.find_one({'_id': ObjectId(request.form.get('user'))})
+    section_len = len(user['Sections'])
+    return render_template('user_settings.html', user=user, section_len=section_len)
+
+
+@app.route('/delete/account', methods=['POST'])
+def delete_account():
+    user = request.form.get('user')
+    print("This is the user that wants to be removed:", user)
+    db.users.remove({'_id': ObjectId(request.form.get('user'))})
+    return redirect(url_for('log_page'))
+
+
 @app.route('/home_page', methods=['POST'])
 def home_page():
     """ If account exists in the database
@@ -32,13 +48,18 @@ def home_page():
     # If we are returing to the webpage
     if user is not None or user_2 is not None:
         if user is None:
+            user_2 = users.find_one({'_id': ObjectId(user_2['_id'])})
             print("By Email", user_2)
-            return render_template('user_home_page.html', user=users.find_one({'_id': ObjectId(user_2['_id'])}))
+            section_len = len(user_2['Sections'])
+            return render_template('user_home_page.html', user=user_2, section_len=section_len)
         else:
+            user = users.find_one({'_id': ObjectId(user['_id'])})
             print("By Username", user)
-            return render_template('user_home_page.html', user=users.find_one({'_id': ObjectId(user['_id'])}))
+            section_len = len(user['Sections'])
+            return render_template('user_home_page.html', user=user, section_len=section_len)
     else:  # Change the URL later, use url_for rather then rendering template
         return render_template('login_page.html', error=True)
+
 
 @app.route('/profile/update', methods=['POST'])
 def update_profile():
@@ -52,12 +73,104 @@ def update_profile():
 
     return render_template('update_profile.html', username=username, email=email, password=password, name=name, lastname=lastname, phone_number=phone_number, user=user)
 
+
 @app.route('/user_home_page', methods=['POST'])  # Will render the home page for the user
 def user_home_page():
     user_id = request.form.get('user')
     user = users.find_one({'_id': ObjectId(user_id)})
+    section_len = len(user['Sections'])
     """ Renders home page for user"""
-    return render_template('user_home_page.html', user=user)
+    return render_template('user_home_page.html', user=user, section_len=section_len)
+
+
+@app.route('/add/devices', methods=['POST'])
+def add_devices():
+    """This is where we render the add device template"""
+    user = users.find_one({'_id': ObjectId(request.form.get('user'))})
+    print("user in adding devices:", user)
+    return render_template('device_form.html', user=user)
+
+
+@app.route('/publish/devices', methods=['POST'])
+def publish_devices():
+    """ Adding devices to account"""
+    device_name = request.form.get('device_name')
+    port_number = int(request.form.get('port_number'))
+    power_consumption = float(request.form.get('power_consumption'))
+    section_name = request.form.get('section_name')
+    device_number = int(request.form.get('device_number'))
+    section_image = request.form.get('section_image')
+    user = users.find_one({'_id': ObjectId(request.form.get('user'))})
+
+    section = {
+            'name': section_name,
+            'devices': [],
+            'image': section_image
+            }
+        #  Input device with name and port amount
+    for index in range(device_number):
+        section['devices'].append(({'device': {
+                            'name': device_name,
+                            'port_number': port_number,
+                            }}))
+    # Input port and each of their consumption
+    print("This is the length of dict:", len(section))
+    for value in section:
+        print("This is the value we are getting:", value)
+        if(value == "devices"):
+            for total in range(len(section['devices'])):
+                for port in range(port_number):
+                    print("We are now looping")
+                    section['devices'][total].update({'port' + str(port): power_consumption
+                            })
+    # Looping the amount of devices for length
+    user2 = users.find_one({'_id': ObjectId(user['_id'])})
+    find_index = 0
+    for section_2 in range(len(user2['Sections'])):
+        print("This is the section we abstract:", user2['Sections'][section_2]['name'])
+        if user2['Sections'][section_2]['name'] == section['name']: # Check if the user is trying to append to existing section
+            print("We will merge")
+            print("lets get the list of devices:", len(section['devices']))
+            for current in range(len(section['devices'])):
+                user['Sections'][find_index]['devices'].append(section['devices'][current])
+            print("This is what we will update:", user['Sections'][find_index]['devices'], len(user['Sections'][find_index]['devices']))
+            user['Sections'][find_index].update({'size': len(user['Sections'][find_index]['devices'])})
+            user_update = {
+                    'username': user['username'],
+                    'password': user['password'],
+                    'email': user['email'],
+                    'name': user['name'],
+                    'lastname': user['lastname'],
+                    'phone_number': user['phone_number'],
+                    'Sections': user['Sections']
+            }
+
+            users.update_one({'_id': ObjectId(user['_id'])},
+                            {'$set': user_update})
+            return render_template('outlet_page.html', user=user)
+        find_index += 1
+
+    section.update({'size': len(section['devices'])})
+    user['Sections'].append(section)
+    # Update the user with the new section
+    user_update = {
+            'username': user['username'],
+            'password': user['password'],
+            'email': user['email'],
+            'name': user['name'],
+            'lastname': user['lastname'],
+            'phone_number': user['phone_number'],
+            'Sections': user['Sections']
+    }
+
+    users.update_one({'_id': ObjectId(user['_id'])},
+                    {'$set': user_update})
+
+
+
+
+    print("This is the new user with a section:", user)
+    return render_template('outlet_page.html', user=user)
 
 
 @app.route('/money_page', methods=['POST'])  # Will render the money page for user
@@ -65,7 +178,8 @@ def momey_page():
     """ Renders money page for user"""
     user_id = request.form.get('user')
     user = users.find_one({'_id': ObjectId(user_id)})
-    return render_template('money_page.html', user=user)
+    section_len = len(user['Sections'])
+    return render_template('money_page.html', user=user, section_len=section_len)
 
 
 @app.route('/outlet_page', methods=['POST'])  # Will render the outlet page for user
@@ -73,7 +187,8 @@ def outlet_page():
     user_id = request.form.get('user')
     user = users.find_one({'_id': ObjectId(user_id)})
     """ Renders outlet page for user"""
-    return render_template('outlet_page.html', user=user)
+    section_len = len(user['Sections'])
+    return render_template('outlet_page.html', user=user, section_len=section_len)
 
 
 @app.route('/create_user', methods=['GET'])
@@ -85,10 +200,52 @@ def create_user():
 @app.route('/user_profile', methods=['POST'])
 def user_profile():
     """ Gets user data and renders the page"""
-    user_id = request.form.get('user')
-    print("This is what we get:", user_id)
-    user = users.find_one({'_id': ObjectId(user_id)})
-    return render_template('user_profile.html', user=user, section_len=len(user['Sections']))
+    if request.method == 'POST':
+        user_id = request.form.get('user')
+        print("This is what we get:", user_id)
+        user = users.find_one({'_id': ObjectId(user_id)})
+        return render_template('user_profile.html', user=user, section_len=len(user['Sections']))
+
+
+@app.route('/publish/profile', methods=['POST'])
+def publish_profile():
+    """ Returns user to the User info section"""
+    user = users.find_one({'_id': ObjectId(request.form.get('user'))})
+    username = request.form.get('username')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    name = request.form.get('name')
+    lastname = request.form.get('lastname')
+    phone_number = request.form.get('phone_number')
+    # IF statements check if the user did not make a change
+    if username == "":
+        username = user['username']
+    if email == "":
+        print("The email was left blank!")
+        email = user['email']
+    if password == "":
+        password = user['password']
+    if name == "":
+        name = user['name']
+    if lastname == "":
+        lastname = user['lastname']
+    if phone_number == "":
+        phone_number = user['phone_number']
+
+    profile_update = {
+        'username': username,
+        'email': email,
+        'password': password,
+        'name': name,
+        'lastname': lastname,
+        'phone_number': phone_number,
+        'Sections': user['Sections']
+    }
+    users.update_one({'_id': ObjectId(user['_id'])},
+                    {'$set': profile_update})
+
+    print("New updated profile:", user)
+    return render_template('user_profile.html', user=users.find_one({'_id': ObjectId(user['_id'])}), section_len=len(user['Sections']))
 
 
 @app.route('/creation_verify', methods=['POST'])
