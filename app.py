@@ -116,13 +116,24 @@ def publish_devices():
     section_name = request.form.get('section_name')
     device_number = int(request.form.get('device_number'))
     section_image = request.form.get('section_image')
+    section_image2 = request.form.get('section_image2')
     user = users.find_one({'_id': ObjectId(request.form.get('user'))})
+    print("This is first section:", section_image)
+    print("This is second section:", section_image2)
+    if section_image == "":
+        print("we will insert computer image here")
+        section = {
+                'name': section_name,
+                'devices': [],
+                'image': section_image2
+                }
+    else:
+        section = {
+                'name': section_name,
+                'devices': [],
+                'image': section_image
+                }
 
-    section = {
-            'name': section_name,
-            'devices': [],
-            'image': section_image
-            }
         #  Input device with name and port amount
     for index in range(device_number):
         section['devices'].append(({'device': {

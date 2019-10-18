@@ -9,20 +9,21 @@
 </head>
 
 <body>
-
-<h1>LOG IN</h1>
+<div class = "outlet_page_template">
+    <h1>Welcome to the Wall-E Outlet App</h1>
+<h2>LOG IN</h2>
 
 <form method='POST' action = '/home_page'>
 
-    TYPE IN USERNAME/EMAIL<input class = 'input' name = 'username' type = 'text'>
-    TYPE IN PASSWORD<input name = 'password' type = 'text'>
+    <input class = 'input' name = 'username' type = 'text' placeholder="Username/Email">
+     <input name = 'password' type = 'text' placeholder="password">
     <button class='button' type = 'submit'>SUBMIT</button>
     {%if error == True%}
     <p>Error, User does not exist</p>
     {%endif%}
 </form>
     <a href = '/create_user'>Create account</a>
-
+</div>
 </body>
 
 </html>

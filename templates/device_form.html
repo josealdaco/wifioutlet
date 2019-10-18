@@ -7,17 +7,17 @@ document.getElementById("line").style.left = "50%";
 <div class = "outlet_page_template">
     <form method = 'POST' action = '/publish/devices' id = "align_center">
         <input type = 'hidden' name = 'user' value = '{{user._id}}'>
-    <p  id = "align_center">Enter Device name:</p><input type = 'text' name = "device_name">
+    <p  id = "align_center">Enter Device name:</p><input  id = "device_form"type = 'text' name = "device_name">
     <br/>
-    <p  id = "align_center">Enter Device number:</p><input type = 'text' name = "device_number">
+    <p  id = "align_center">Enter Device number:</p><input  id = "device_form" type = 'text' name = "device_number">
     <br/>
-     <p id = "align_center">Enter port number:</p><input type = 'text' name = "port_number">
+     <p id = "align_center">Enter port number:</p><input  id = "device_form" type = 'text' name = "port_number">
      <br/>
-     <p id = "align_center">Enter power usage:</p><input type = 'text' name = "power_consumption">
+     <p id = "align_center">Enter power usage:</p><input  id = "device_form" type = 'text' name = "power_consumption">
      <br/>
-     <p id = "align_center">Enter Section name: </p><input type = 'text' name = "section_name">
+     <p id = "align_center">Enter Section name: </p><input  id = "device_form" type = 'text' name = "section_name">
      <br/>
-     <p id = "align_center">Enter Image URL: </p><input type = 'text' name = "section_image">
+     <p id = "align_center">Enter Image URL: </p><input  id = "device_form" type = 'text' name = "section_image"> <p>Or upload image</p> <input type="file" name="section_image2">
      <br/>
       <br/>
      <button class = 'button' type = 'submit'>Submit Devices</button>

@@ -42,8 +42,27 @@
     left:75% /*87% for line above */
 
 }
+#device_form{
+      width: 25%;
+}
 
+input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid black;
+  background-image: linear-gradient(#00ff2b, #189048);
+   border-radius: 25px;
+   font-size:15px;
+  color: white;
+}
 
+::placeholder {
+  color: #eae4e4;
+  opacity: 1; /* Firefox */
+  font-size:15px;
+}
 
 
 .home_page_template{
