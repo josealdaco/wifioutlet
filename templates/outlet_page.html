@@ -16,6 +16,8 @@ document.getElementById("line").style.left = "12%";
         <div>
             <form method="POST" action = "/user/section">
                 <!-- Will display and direct to section if clicked upon-->
+                <input type = 'hidden' name = 'user' value = '{{user._id}}'>
+                <input type = 'hidden' name = 'section' value = '{{section.name}}'>
                 <button type = 'submit'><img src = '{{section.image}}' width="100px" height="100px"></button>
             </form>
             <h2>Section name: {{section.name}}</h2>

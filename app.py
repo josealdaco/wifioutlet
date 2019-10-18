@@ -40,10 +40,10 @@ def delete_account():
 def home_page():
     """ If account exists in the database
         We will render the homepage"""
-    user = users.find_one({'username': request.form.get('username')},
-                          {'password': request.form.get('password')})
-    user_2 = users.find_one({'email': request.form.get('username')},
-                          {'password': request.form.get('password')})
+    user = users.find_one({'username': request.form.get('username'),
+                          'password': request.form.get('password')})
+    user_2 = users.find_one({'email': request.form.get('username'),
+                          'password': request.form.get('password')})
 
     # If we are returing to the webpage
     if user is not None or user_2 is not None:
@@ -51,12 +51,22 @@ def home_page():
             user_2 = users.find_one({'_id': ObjectId(user_2['_id'])})
             print("By Email", user_2)
             section_len = len(user_2['Sections'])
-            return render_template('user_home_page.html', user=user_2, section_len=section_len)
+            if section_len != 0:
+                sum = 0
+                for device in range(len(user_2['Sections'])):
+                    for port in range(len(user_2['Sections'][device]['devices'])):
+                        sum += int(user_2['Sections'][device]['devices'][port]['device']['port_number']) * int(user_2['Sections'][device]['devices'][port]['port0']['power'])
+            return render_template('user_home_page.html', user=user_2, section_len=section_len, total_consumption=sum, total_cost=sum*.4)
         else:
             user = users.find_one({'_id': ObjectId(user['_id'])})
             print("By Username", user)
             section_len = len(user['Sections'])
-            return render_template('user_home_page.html', user=user, section_len=section_len)
+            sum = 0
+            if section_len != 0:
+                for device in range(len(user['Sections'])):
+                    for port in range(len(user['Sections'][device]['devices'])):
+                        sum += int(user['Sections'][device]['devices'][port]['device']['port_number']) * int(user['Sections'][device]['devices'][port]['port0']['power'])
+            return render_template('user_home_page.html', user=user, section_len=section_len, total_consumption=sum, total_cost=sum*.4)
     else:  # Change the URL later, use url_for rather then rendering template
         return render_template('login_page.html', error=True)
 
@@ -76,11 +86,17 @@ def update_profile():
 
 @app.route('/user_home_page', methods=['POST'])  # Will render the home page for the user
 def user_home_page():
+    """ Renders home page for user"""
     user_id = request.form.get('user')
     user = users.find_one({'_id': ObjectId(user_id)})
     section_len = len(user['Sections'])
-    """ Renders home page for user"""
-    return render_template('user_home_page.html', user=user, section_len=section_len)
+    sum = 0
+    if section_len != 0:
+        for device in range(len(user['Sections'])):
+            for port in range(len(user['Sections'][device]['devices'])):
+                #print("This is the devices in section 1:", user['Sections'][device]['devices'][0]['port0'])
+                sum += int(user['Sections'][device]['devices'][port]['device']['port_number']) * int(user['Sections'][device]['devices'][port]['port0']['power'])
+    return render_template('user_home_page.html', user=user, section_len=section_len, total_consumption=sum, total_cost=sum*.4)
 
 
 @app.route('/add/devices', methods=['POST'])
@@ -121,8 +137,8 @@ def publish_devices():
             for total in range(len(section['devices'])):
                 for port in range(port_number):
                     print("We are now looping")
-                    section['devices'][total].update({'port' + str(port): power_consumption
-                            })
+                    section['devices'][total].update({'port' + str(port): {'power': power_consumption
+                                                                                }})
     # Looping the amount of devices for length
     user2 = users.find_one({'_id': ObjectId(user['_id'])})
     find_index = 0
@@ -246,6 +262,20 @@ def publish_profile():
 
     print("New updated profile:", user)
     return render_template('user_profile.html', user=users.find_one({'_id': ObjectId(user['_id'])}), section_len=len(user['Sections']))
+
+
+@app.route('/user/section', methods=['POST'])
+def user_section():
+    """ View section and control devices"""
+    user = users.find_one({'_id': ObjectId(request.form.get('user'))})
+    section_name = request.form.get('section')  # Current section selected
+    index = 0
+    for data in user['Sections']:
+        if data['name'] == section_name:
+            break
+        index += 1
+    section = user['Sections'][index]  # We search for the correct data
+    return render_template('section_form.html', user=user, section=section)
 
 
 @app.route('/creation_verify', methods=['POST'])

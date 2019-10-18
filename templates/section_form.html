@@ -1,0 +1,27 @@
+{%extends 'home_page.html'%}
+
+
+{%block content%}
+<link rel = 'stylesheet' type = 'text/css' href = "/static/style.css">
+<input type="hidden" name = "user" value = "{{user._id}}">
+<script>
+document.getElementById("line").style.left = "12%";
+</script>
+
+<div class = "outlet_page_template">
+    <h1 id="align_center"> {{section.name}}</h1>
+    <h2 id="align_center"> Device settings </h2>
+
+    {%for device in section.devices%}
+    <h3>{{device.device.name}} : Port size: {{device.device.port_number}} Power Comsumption: {{device.port0.power}} Kw/h</h3>
+        {% for ports in device%}
+        {%set num = loop.index -2%}
+            {%if ports  == 'port'~num%}
+            <form method = 'POST' action = '/port/status'>
+            Port:{{num + 1}} <button class = "button" type = 'submit'>Turn OFF</button>
+            </form>
+            {%endif%}
+            {%endfor%}
+    {%endfor%}
+</div>
+{%endblock%}

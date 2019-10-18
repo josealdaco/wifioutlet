@@ -15,15 +15,15 @@ document.getElementById("line").style.left = "50%";
     {% for section in user.Sections%}
 
         <div>
-            <form method="POST" action = "/user/section">
                 <!-- Will display and direct to section if clicked upon-->
-                <button type = 'submit'><img src = '{{section.image}}' width="100px" height="100px"></button>
-            </form>
+                <img src = '{{section.image}}' width="100px" height="100px">
+
             <h2>Section name: {{section.name}}</h2>
         </div>
         {%endfor%}
         <br/>
         <h2 id="align_center"><u>TOTAL OUTPUT</u></h2>
+
         {%if section_len == 0%}
         <p>No devices in your account :(</p>
         <form method="POST" action="/add/devices">
@@ -31,6 +31,11 @@ document.getElementById("line").style.left = "50%";
             <button class = 'button' type = 'submit'>ADD DEVICES</button>
         </form>
         {%endif%}
+            {%if section_len != 0%}
+            <p>{{total_consumption}} Kw/h</p>
+            <p>{{total_cost}}$</p>
+
+            {%endif%}
 </div>
 
 
